@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>global composite operation</title>
+</head>
+
+<body>
+    <canvas></canvas>
+</body>
+<script>
+    var c = document.getElementsByTagName("canvas")[0];
+    c.width = 500;
+    c.height = 500;
+
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    var img = new Image();
+    img.src = "./101-snow/qi.PNG";
+    img.onload = function() {
+        //表示从 100 100 的位置开始截取 一直截到 200 200 
+        //然后将这个截取的图片 从 50 50 的地方开始画 画图片的宽高 为 200 200
+        ctx.drawImage(img, 100, 100, 200, 200, 50, 50, 200, 200);
+    }
+</script>
+
+</html>

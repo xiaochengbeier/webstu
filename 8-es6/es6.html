@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+
+<body>
+    <script>
+        //对象克隆
+        let obj = {
+            name: "小城贝尔",
+            age: 22,
+            address: {
+                province: "陕西",
+                city: "安康"
+            },
+            friends: ["牟其中", "黄冠宇", "马香波"]
+        }
+
+        function getType(data) {
+            if (data === null) return;
+            let string = "[object Object]";
+            let arr = "[object Array]";
+            let toStr = Object.prototype.toString;
+
+            if (typeof data == "object") { //表示是数组或对象
+                //判断是否是数组
+                return toStr.call(data) == arr ? 2 : 3;
+            } else { //基本数据类型
+                return 1;
+            }
+        }
+
+        function deepClone(orign, target) {
+            let tar = target || {};
+            //遍历循环 origin
+            for (const key in orign) {
+                if (orign.hasOwnProperty(key)) {
+                    //类型判断 1 表示基本 2 表示数组 3 表示对象
+                    let type = getType(orign[key]);
+                    if (type == 1) {
+                        tar[key] = orign[key]
+                    } else if (type == 2) {
+                        tar[key] = [];
+                        deepClone(orign[key], tar[key]);
+                    } else if (type == 3) {
+                        tar[key] = {};
+                        deepClone(orign[key], tar[key]);
+                    };
+                }
+            }
+
+            return tar;
+        }
+        let newObj = deepClone(obj);
+        console.log(obj);
+        console.log(newObj);
+        console.log(obj.address === newObj.address);
+    </script>
+</body>
+
+</html>

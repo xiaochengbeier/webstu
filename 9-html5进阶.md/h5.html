@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // worker 是真正的多线程
+        // 路径表示另一个线程执行的代码
+        let worker = new Worker("./outset.js");
+        //必须发送数据 outset.js 才会执行
+        worker.postMessage({
+            a: 100
+        });
+        //结束线程工作
+        // worker.terminate();
+        //接收别的线程传输过来的数据
+        worker.onmessage = function(e) {
+            console.log(e.data.result); //5050
+        }
+    </script>
+</body>
+
+</html>

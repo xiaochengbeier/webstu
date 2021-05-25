@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+ 
+</head>
+<body>
+       
+        <div id="app">
+                <h1>VUE</h1>
+                <h2>name:{{name}} ---->age:{{age}}</h2>
+                <h2>province:{{address.province}} ---->age:{{address.city}}</h2>
+                <ul>
+                    <li v-for="item of friends">
+                        name-->{{item.name}}-->age--》{{item.age}}
+                    </li>
+                </ul>
+            </div>
+       
+
+        <script crossorigin="anonymous" integrity="sha512-YXLGLsQBiwHPHLCAA9npZWhADUsHECjkZ71D1uzT2Hpop82/eLnmFb6b0jo8pK4T0Au0g2FETrRJNblF/46ZzQ==" src="http://lib.baomitu.com/vue/2.6.12/vue.js"></script>
+    <script>
+        let vue3 = new Vue({
+            el:"#app",
+            data:{
+                name:"小城贝尔",
+                age:20,
+                address:{
+                    province:"陕西",
+                    city:"安康"
+                },
+                friends:[
+                           {name:"曹操",age:40,city:"魏国"},
+                           {name:"刘备",age:50,city:"蜀国"},
+                           {name:"孙权",age:30,city:"吴国"},
+                           {name:"刘邦",age:300,city:"汉朝"}
+                        ],
+            }
+        });
+        
+    </script>
+</body>
+</html>

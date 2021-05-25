@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图的搜索。。。。</title>
+</head>
+
+<body>
+    <script>
+        class Node {
+            constructor(value) {
+                this.value = value;
+                this.neighbor = [];
+            }
+        };
+        let a1 = new Node("a1");
+        let a2 = new Node("a2");
+        let a3 = new Node("a3");
+        let a4 = new Node("a4");
+        let a5 = new Node("a5");
+        let a6 = new Node("a6");
+
+        a1.neighbor.push(a2, a3, a4);
+        a2.neighbor.push(a1, a3, a5);
+        a3.neighbor.push(a1, a2, a4, a5, a6);
+        a4.neighbor.push(a1, a3, a6);
+        a5.neighbor.push(a2, a3, a6);
+        a6.neighbor.push(a3, a4, a5);
+
+
+        //图的深度搜索
+        function pictureDeepSearch(root, target, already) {
+            console.log(root.value, "---遍历过程----");
+            //*******传入节点先判空，返回错误劳无功。*******
+            if (root == null) {
+                return false;
+            }
+            //*******判断过去存在空，返回错误终止功。*******
+            //判断这个节点是否已经找过
+            if (already.indexOf(root) != -1) {
+                return false;
+            }
+            //*******后续判断等号空，符合返回正确功。*******
+            if (root.value == target) {
+                return true;
+            }
+            //*******循环引用图中空，数组存储过去功。*******
+            //将这个点加入已经赵国的数组中
+            already.push(root);
+            //定义变量存储查找结果
+            let result = null;
+            for (let i = 0; i < root.neighbor.length; i++) {
+                //******最后遍历子集空，挨个遍历递归功。******
+                //******还有变量或字空，递归结果存储功。******
+                result |= pictureDeepSearch(root.neighbor[i], target, already);
+            }
+            return result ? true : false
+        }
+        let res = pictureDeepSearch(a1, "a6", []);
+        console.log(res, "---pictureDeepSearch-----");
+
+
+        //图的广度搜索
+        function pictureBreadthSearch(arr, target, already) {
+            //******广度搜索数组传，已看节点集合团。******
+            //******长空数组校验传，递归出口错误团。******
+            if (arr == null || arr.length == 0) {
+                return false;
+            }
+            //******定义数组递归传，遍历传入挨个团。******
+            let newArr = [];
+            for (let i = 0; i < arr.length; i++) {
+                console.log(arr[i].value, "---图的广度遍历过程----");
+                //******首先判断已查传，在比数据等号团。******
+                //判断如果已经查找过那么跳过这次循环
+                if (already.indexOf(arr[i]) != -1) {
+                    continue;
+                }
+                if (arr[i].value == target) {
+                    return true;
+                } else {
+                    //******已查集合加入传，子级加入新天团。******
+                    newArr.push(...arr[i].neighbor);
+                }
+                //******已查集合加入传，子级加入新天团。******
+                //将已经查找过的节点加入already
+                already.push(arr[i]);
+            }
+            //******递归调用参数传，数组用新返回团。******
+            return pictureBreadthSearch(newArr, target, already);
+        }
+        let mes = pictureBreadthSearch([a1], "a6", []);
+        console.log(mes, "----pictureBreadthSearch-----");
+    </script>
+</body>
+
+</html>

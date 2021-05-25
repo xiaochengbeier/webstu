@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //单链表节点
+        class Node {
+            constructor(value) {
+                this.value = value;
+                this.next = null;
+            }
+        }
+        //构建链表
+        let a = new Node("a");
+        let b = new Node("b");
+        let c = new Node("c");
+        let d = new Node("d");
+        let e = new Node("e");
+        a.next = b;
+        b.next = c;
+        c.next = d;
+        d.next = e;
+
+        function ReverseList(pHead) {
+            if (pHead == null) {
+                return null;
+            }
+            //递归倒数第二个
+            if (pHead.next.next == null) {
+                pHead.next.next = pHead;
+                return pHead.next;
+            } else { //倒数第三个
+                let res = ReverseList(pHead.next);
+                pHead.next.next = pHead;
+                pHead.next = null;
+                return res;
+            }
+        }
+        ReverseList(a);
+        console.log(e);
+    </script>
+</body>
+
+</html>

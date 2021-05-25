@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>date time picker</title>
+    <link rel="stylesheet" href="./sample in bootstrap v3/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="./bootstrap-datetimepicker.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 bg-success">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">日期</span>
+                    <input type="text" id="datetimepicker" class="form-control" placeholder="输入日期" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./sample in bootstrap v3/jquery/jquery-1.8.3.min.js"></script>
+    <script src="./sample in bootstrap v3/bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap-datetimepicker.js"></script>
+    <script>
+        /**
+         * Simplified Chinese translation for bootstrap-datetimepicker
+         * Yuan Cheung <advanimal@gmail.com>
+         */
+        ;
+        (function($) {
+            $.fn.datetimepicker.dates['zh-CN'] = {
+                days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+                daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+                daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+                months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                today: "今天",
+                suffix: [],
+                meridiem: ["上午", "下午"]
+            };
+        }(jQuery));
+
+        $('#datetimepicker').datetimepicker({
+            language: "zh-CN"
+        });
+    </script>
+</body>
+
+</html>

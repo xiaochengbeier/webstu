@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="./css/stulist.css">
+<div class="w">
+    <div class="search">
+        <label for="search">搜索:</label> <input placeholder="请输入学号" type=" text ">
+        <button>搜索</button>
+    </div>
+    <div class="show-list ">
+        <table>
+            <thead>
+                <tr>
+                    <td>学号 </td>
+                    <td>姓名 </td>
+                    <td>性别 </td>
+                    <td>邮箱 </td>
+                    <td>年龄 </td>
+                    <td>手机号 </td>
+                    <td>住址 </td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="change-page"></div>
+    </div>
+    <div class="modle form-wrap">
+        <form action="" class="edit-stu-form">
+            <div class="input-wrap">
+                <h2>编辑学生</h2>
+                <div>
+                    <label for="sNo">学号:</label><input type="text" id="sNo" name="sNo" readonly>
+                </div>
+                <div>
+                    <label for="name">姓名:</label> <input type="text" id="name" name="name">
+                </div>
+                <div class="sex-wrap">
+                    <label class="text-sex" for="">性别</label>
+                    <div>
+                        <input name="sex" type="radio" value="0" id="boy">
+                        <label for="boy">男</label>
+                        <input name="sex" checked type="radio" value="1" id="gril">
+                        <label for="gril">女</label>
+                    </div>
+                </div>
+                <div>
+                    <label for="email">邮箱:</label>
+                    <input type="text" id="email" name="email">
+                </div>
+                <div>
+                    <label for="birth">出生年：</label>
+                    <input type="text" id="birth" name="birth">
+                </div>
+                <div>
+                    <label for="phone">手机号：</label>
+                    <input type="text" id="phone" name="phone">
+                </div>
+                <div>
+                    <label for="address">住址：</label>
+                    <input type="text" id="address" name="address">
+                </div>
+                <div class="btn-wrap">
+                    <input type="button" class="btn edit-btn" value="编辑">
+                    <input type="reset" class="btn reset-btn" value="重置">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<link rel="stylesheet" href="./changePage/changePage.css">
+<script src="./changePage/changePage.js"></script>
+<script src="./js/stulist.js"></script>

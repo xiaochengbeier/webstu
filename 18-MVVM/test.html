@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .passwordEqlAge{
+            color: yellow;
+        }   
+        .red{
+            background-color: red;
+        }   
+        .active::after{
+            content: "我是active";
+            font-size: 20px;
+
+        }   
+        .pink{
+            border:  4px solid pink;
+        }   
+        .down{
+            padding-bottom: 30px;
+        }   
+        .click{
+            height: 100px;
+            width: 100px;
+            background-color: gold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>VUE</h1>
+        <h2>name:{{name}} ---->age:{{age}}</h2>
+        <h2>province:{{address.province}} ---->age:{{address.city}}</h2>
+        <input id="input" class="myChlass"  v-slot:foot.trim="user"  v-show="true" v-model="address.city"> {{address.city}}
+        <ul>
+            <li  v-for="(key,index) in friends">
+                firend-name:{{key.name}}----->index-->{{index}}
+            </li>   
+        </ul>
+        <ol>
+            <li  v-for="(key,index) in brother">
+                firend-name:{{key.name}}----->index-->{{index}}
+            </li>
+        </ol>
+        <img v-bind:src="url" alt="">
+        <div v-bind:class="{passwordEqlAge:password>age,red:age<10,active:isActive,pink:4,down:'string'}">bind class</div>
+        <div v-bind:style="{color:red,font-size:20 px}">bind style</div>
+        <div v-on:click.stop="clickHand($event)" class="click">事件</div>
+        <firstComp style="height: 100px;width:100px;background-color:red">firstComp</firstComp>
+    </div>
+    
+    <script type="module">
+        import Vue  from "./core/index.js";
+        window.vue = new Vue({
+            components:{
+                firstComp:{
+                    props:[],
+                    data(){
+                        return{
+
+                        }
+                    },
+                    template:``,
+                }
+            },
+            methods:{
+                    clickHand(ev){
+                        console.log(this.address,ev);
+                    },
+                    changeHand(){
+                        console.log(this);
+                    },
+                },
+            el:"app",
+            data:{
+                isActive:true,
+                password:11111,
+                name:"小城贝尔",
+                age:20,
+                address:{
+                    province:"陕西",
+                    city:"安康"
+                },
+                brother:[
+                   {name:"孙悟空",age:20,city:"花果山"},
+                   {name:"猪八戒",age:20,city:"高老庄"},
+                   {name:"沙和尚",age:20,city:"流沙河"},
+                ],
+                friends:[
+                           {name:"曹操",age:40,city:"魏国"},
+                           {name:"刘备",age:50,city:"蜀国"},
+                           {name:"孙权",age:30,city:"吴国"},
+                           {name:"刘邦",age:300,city:"汉朝"}
+                        ],
+                url:"https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3871871761,1785697837&fm=26&gp=0.jpg",
+            }
+        });
+        //测试stop阻止冒泡
+        document.onclick=()=>{
+            console.log("测试stop阻止冒泡");
+        }
+    </script>
+</body>
+</html>

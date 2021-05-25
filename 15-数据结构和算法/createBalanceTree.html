@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建平衡树</title>
+</head>
+
+<body>
+    <script>
+        class Node {
+            constructor(value) {
+                this.value = value;
+                this.left = null;
+                this.right = null;
+            }
+        }
+        let a6 = new Node(6);
+        let a4 = new Node(4);
+        let a7 = new Node(7);
+        let a1 = new Node(1);
+        let a5 = new Node(5);
+        let a3 = new Node(3);
+        let a2 = new Node(2);
+        a4.left = a3;
+        a3.left = a2;
+        a2.left = a1;
+        a4.right = a5;
+        a5.right = a6;
+        a6.right = a7;
+
+        function getDeep(root) {
+            //*********首先方法求深度，递归出口空零住。*********
+            if (root == null) {
+                return 0;
+            }
+            //********* 左右递归得深度，返回较大加一住。*********
+            let leftDeep = getDeep(root.left);
+            let rightDeep = getDeep(root.right);
+            let max = Math.max(leftDeep, rightDeep);
+            return max + 1;
+        }
+
+        function isBalance(tree) {
+            if (tree == null) {
+                return true;
+            }
+            // 获得左子树深度
+            let leftDeep = getDeep(tree.left);
+            // 获得右子树深度
+            let rightDeep = getDeep(tree.right);
+            // 判断是否符合平衡二叉树的 标准
+            //********* 然后左右树深度，差值必须一内住。********* 
+            if (Math.abs(leftDeep - rightDeep) > 1) {
+                return false;
+            } else {
+                //*********当前符合定深度，最右子节递归住。*********
+                //判断左子树是不是二叉平衡树
+                let leftIs = isBalance(tree.left);
+                // 判断右子树是不是二叉平衡树
+                let rightIs = isBalance(tree.right);
+                //*********返回条件有二度，且字连接综合住。*********
+                return leftIs && rightIs;
+            }
+        }
+
+        function rightRotate(root) {
+            //右旋转
+            //找到新的根
+            let newRoot = root.left;
+            //找到变换分支
+            let changeBranch = root.left.right;
+            //将变换分支的接到变换点的左节点
+            root.left = changeBranch;
+            //将变换节点接到新节点的右节点
+            newRoot.right = root;
+            return newRoot;
+        };
+
+        function leftRotate(root) {
+            //左旋
+            // 找到新的根
+            let newRoot = root.right;
+            //找到变换分支
+            let changeBranch = root.right.left;
+            // 将变换分支连接到变换节点的右节点
+            root.right = changeBranch;
+            // 将变换节点连接到新根的左节点
+            newRoot.left = root;
+            return newRoot;
+        };
+
+        function createBalance(root) {
+            //*******参数检查先构建，是否平衡返回现。******
+            //如果已经是平衡二叉树那么构建完毕
+            if (isBalance(root)) {
+                return root;
+            }
+            //*******倒序遍历顺序建，左右不空平衡现。*******
+            //如果不是平衡二叉树那么将其左子树构建为平衡二叉树
+            if (root.left != null) {
+                root.left = createBalance(root.left);
+            }
+            //如果不是平衡二叉树那么将其右子树也构建为平衡二叉树
+            if (root.right != null) {
+                root.right = createBalance(root.right);
+            }
+            //*******获得深度攀比建，左右比较旋转现。*******
+            //获得左子树深度
+            let leftDeep = getDeep(root.left);
+            //获得右子树深度
+            let rightDeep = getDeep(root.right);
+            //判断左右子树是不是平衡二叉树
+
+            if (Math.abs(leftDeep - rightDeep) < 2) {
+                return root;
+            } else {
+                //*******旋转左右右左建，变化分支深度现。*******
+                // 如果 leftDeep > rightDeep 那么需要右旋
+                if (leftDeep > rightDeep) {
+                    //判断变化分支是否比不变分支长
+                    if (getDeep(root.left.right) > getDeep(root.left.left)) {
+                        //对新根节点先左旋
+                        leftRotate(root.left);
+                    }
+                    //*******然后单旋再构建，获得新根节点现。*******
+                    let newRoot = rightRotate(root);
+                    //*******左左右右还构建，平衡由此终相见。*******
+                    //将新根的有节点构建成平衡二叉树
+                    createBalance(newRoot.right);
+                    //在将 newRoot构建一遍
+                    newRoot = createBalance(newRoot);
+                    return newRoot;
+                } else { // 如果  rightDeep >leftDeep 那么需要左旋
+                    //*******旋转左右右左建，变化分支深度现。*******
+                    //判断变化分支是否比不变分支长
+                    if (getDeep(root.right.left) > getDeep(root.right.right)) {
+                        //对新根节点进行右旋
+                        rightRotate(root.right)
+                    }
+                    //*******然后单旋再构建，获得新根节点现。*******
+                    let newRoot = leftRotate(root);
+                    //*******左左右右还构建，平衡由此终相见。*******
+                    //对旋转之后的新根节点的左节点构建成二叉树
+                    createBalance(newRoot.left);
+                    // 再将newRoot构建一遍
+                    newRoot = createBalance(newRoot);
+                    return newRoot;
+                }
+
+            }
+
+        }
+        let btree = createBalance(a4);
+        console.log(btree);
+        console.log(isBalance(btree));
+    </script>
+</body>
+
+</html>

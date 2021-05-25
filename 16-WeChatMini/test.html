@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .flex-wrap {
+            height: 400px;
+            background-color: red;
+            display: flex;
+        }
+        
+        .flex1,
+        .flex2 {
+            height: 50px;
+            width: 50px;
+            float: right;
+            background-color: black;
+        }
+        
+        .flex2 {
+            background-color: gray;
+        }
+    </style>
+    <div class="flex-wrap">
+        <div class="flex1"></div>
+        <div class="flex2"></div>
+    </div>
+    <script>
+        //单链表节点
+        class Node {
+            constructor(value) {
+                this.value = value;
+                this.next = null;
+            }
+        }
+        //构建链表
+        let a = new Node("a");
+        let b = new Node("b");
+        let c = new Node("c");
+        let d = new Node("d");
+        let e = new Node("e");
+        a.next = b;
+        b.next = c;
+        c.next = d;
+        d.next = e;
+        //遍历链表循环方式
+        function lookLink(root) {
+            if (root == null) { //判断传入的参数是否为空
+                return;
+            }
+            let temp = root;
+            while (true) {
+                console.log(temp.value);
+                if (temp.next == null) {
+                    break;
+                }
+                temp = temp.next;
+            }
+        }
+        lookLink(a);
+        //递归遍历
+        function recursiveLook(root) {
+            if (root == null) {
+                return;
+            }
+            console.log(root.value);
+            if (root.next == null) {
+                return;
+            }
+            recursiveLook(root.next)
+        };
+        recursiveLook(a);
+
+        //单链表逆序
+        function reverseLink(root) {
+            //将传入的root看做倒数第三个比较好理解
+            if (root == null) {
+                return;
+            }
+            //*******寻找出口倒二链，下下判断空相见。
+            if (root.next.next == null) {
+                //如果进到这里就是倒数第二个节点
+                //*******倒一指向倒二链，返回倒一新根见。
+                root.next.next = root;
+                return root.next;
+            } else {
+                //*******并非出口递归链，回溯到三操作见。
+                let result = reverseLink(root.next);
+                // 将倒数第三个接到倒数第二个后边
+                root.next.next = root;
+                // 将倒数第三个的next置为空
+                //*******设置到三下空链，预防引用循环见。
+                root.next = null;
+                return result;
+            }
+        }
+        console.log("---------reverse---------");
+        let re = reverseLink(a);
+        recursiveLook(re);
+    </script>
+</body>
+
+</html>

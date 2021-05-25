@@ -1,0 +1,72 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.game-plate {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    border: 2px solid red;
+    margin: auto;
+    overflow: hidden;
+}
+
+.sky {
+    height: 100%;
+    width: 200%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background-image: url(../img/sky.png);
+}
+
+.road {
+    width: 200%;
+    height: 112px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    background-image: url(../img/land.png);
+}
+
+.bird {
+    width: 33px;
+    height: 26px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    background-image: url(../img/bird.png)
+}
+
+.bird.swing1 {
+    background-position: -10px -10px;
+}
+
+.bird.swing2 {
+    background-position: 44px -10px;
+}
+
+.bird.swing3 {
+    background-position: -60px -10px;
+}
+
+.pipe {
+    width: 52px;
+    position: absolute;
+}
+
+.up-pipe {
+    top: 0px;
+    left: 100%;
+    height: 50px;
+    background: url(../img/pipeDown.png) no-repeat;
+    background-position: bottom;
+}
+
+.down-pipe {
+    height: 50px;
+    left: 100%;
+    bottom: 112px;
+    background: url(../img/pipeUp.png) no-repeat;
+}

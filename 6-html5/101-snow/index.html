@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>snow</title>
+    <style>
+        #canvas {
+            background-color: #000;
+        }
+        
+        body {
+            margin: 0px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var c = document.getElementsByTagName("canvas")[0];
+        c.height = window.screen.height;
+        c.width = window.screen.width;
+        var cv = c.getContext("2d");
+        var img = new Image();
+        img.src = "./qi.PNG";
+
+
+        //雪花构造函数
+        function Snow(x, y, speedx, speedy, scale, rotate, color) {
+            this.x = x;
+            this.y = y;
+            this.speedx = speedx;
+            this.speedy = speedy;
+            this.scale = scale;
+            this.rotate = rotate;
+            this.color = color;
+        }
+        //将雪花画到画布
+        Snow.prototype.rander = function() {
+            cv.save();
+            cv.beginPath();
+            cv.translate(this.x, this.y);
+            cv.rotate(this.rotate * (Math.PI / 180));
+            cv.scale(this.scale, this.scale);
+            cv.strokeStyle = this.color ? this.color : "rgb(255, 255, 255)";
+            cv.lineWidth = 8;
+            cv.lineCap = "round";
+            //画第一条线
+            cv.moveTo(-20, 0);
+            cv.lineTo(20, 0);
+            //计算另几条线 sin(30) = x / 20   sin(60) = y/ 20;
+            var newX = Math.sin(Math.PI / 6) * 20;
+            var newY = Math.sin(Math.PI / 3) * 20;
+            cv.moveTo(newX, newY);
+            cv.lineTo(-newX, -newY);
+            cv.moveTo(newX, -newY);
+            cv.lineTo(-newX, newY);
+            cv.stroke();
+            cv.restore();
+        }
+        var snows = [];
+
+        //创建100个雪花
+        for (var i = 0; i < 100; i++) {
+            //随机x位置
+            var x = Math.random() * (document.documentElement.clientWidth);
+            //随机水平速度
+            var speedx = Math.random() * 80;
+            var speedy = Math.random() * 50;
+            //随机大小
+            var scale = Math.random() + 0.5;
+            //随机旋转角度
+            var rotate = Math.random() * 60;
+            //随机颜色
+            var color = colorRan();
+            //解决闭包问题
+            (function(x, y, speedx, speedy, scale, rotate, color) {
+                window.setTimeout(function() {
+                    var snow = new Snow(x, 0, speedx, speedy, scale, rotate, color);
+                    snow.rander();
+                    snows.push(snow);
+
+                }, Math.random() * 8000);
+            }(x, 0, speedx, speedy, scale, rotate, color))
+        }
+        //随机颜色
+        function colorRan() {
+            var r = Math.ceil(Math.random() * 255) + " , ";
+            var g = Math.ceil(Math.random() * 255) + " , ";
+            var b = Math.ceil(Math.random() * 255);
+            var color = "rgb(" + r + g + b + ")";
+            return color;
+        }
+        //飘落效果
+        function drop() {
+            //首先清除画布
+            cv.clearRect(0, 0, c.width, c.height);
+            for (var i = 0; i < snows.length; i++) {
+                var snow = snows[i];
+                snow.x = (snow.x + 20) % c.width;
+                snow.y = (snow.y + 10) % c.height;
+                snow.rotate = (snow.rotate + 30) % 60;
+                snow.color = colorRan();
+                snow.rander();
+            }
+            img.onload = function() {
+                var bg = cv.createPattern(img);
+                cv.drawImage(img, 0, 0);
+            }
+
+        }
+
+        window.setInterval(drop, 1000 / 10);
+    </script>
+</body>
+
+</html>

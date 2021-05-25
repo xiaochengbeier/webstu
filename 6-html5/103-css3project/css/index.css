@@ -1,0 +1,283 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+body,
+html {
+    font-size: 14px;
+    color: #333;
+    font-family: 'YouYuan';
+}
+
+
+/* 设置包裹层样式 */
+
+.wrap {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+/* 设置头部样式 */
+
+.wrap .header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    left: 0px;
+    height: 4.5rem;
+    color: #fff;
+    background: linear-gradient(to right, #333, #222, #aaa);
+}
+
+
+/* 设置头部背景图片 */
+
+.wrap .header::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0px;
+    opacity: 0.3;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-image: url("../image/bg.png");
+    z-index: -1;
+}
+
+.wrap .header .log {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 42px;
+}
+
+.wrap .header .log img {
+    height: 80%;
+}
+
+
+/* 文字动画 */
+
+@keyframes textRun {
+    0% {
+        transform: translateY(0);
+        text-shadow: 4px 2px 6px #ccc;
+    }
+    100% {
+        transform: translateY(-20px);
+        text-shadow: 4px 10px 9px #ccc;
+    }
+}
+
+.wrap .header .log span {
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-left: 1rem;
+    text-shadow: 4px 2px 6px #ccc;
+    animation: textRun .7s linear infinite alternate;
+}
+
+.wrap .header .log span:nth-of-type(2) {
+    animation-delay: .2s;
+}
+
+.wrap .header .log span:nth-of-type(3) {
+    animation-delay: .4s;
+}
+
+.wrap .header .log span:nth-of-type(4) {
+    animation-delay: .6s;
+}
+
+
+/* 设置按钮 */
+
+.wrap .header .button {
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    display: none;
+    transform: translateY(-50%);
+}
+
+.wrap .header .button span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    margin: 4px 0px;
+    background-color: #fff;
+}
+
+
+/* 按钮hover扩大 */
+
+.wrap .header .button:hover {
+    transform: translateY(-50%) scale(1.1);
+    transition: all .5s ease-in-out;
+}
+
+
+/* 按钮hover span 旋转 */
+
+@keyframes rotateSpan {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(45deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.wrap .header .button:hover span {
+    animation: rotateSpan 2s ease-in-out infinite;
+}
+
+
+/* 设置下拉列表样式 */
+
+.drop-down {
+    width: 100%;
+    display: none;
+    padding: 30px;
+    background: linear-gradient(#333, #222, #111);
+    box-sizing: border-box;
+    text-align: center;
+    color: #ccc;
+    font-size: 1.1rem;
+}
+
+.drop-down ul li {
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.drop-down ul li:hover {
+    color: #fff;
+}
+
+
+/* 头部响应式效果 */
+
+@media screen and (max-width:768px) {
+    .wrap .header .button {
+        display: block;
+    }
+    .drop-down {
+        display: block;
+        position: absolute;
+        top: 4.5rem;
+    }
+    .wrap .header .log {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .wrap .content {
+        padding-left: 0px;
+    }
+    .left-menu {
+        display: none;
+    }
+}
+
+
+/* 设置左边菜单效果 */
+
+.left-menu {
+    position: fixed;
+    top: 4.5rem;
+    width: 200px;
+    height: calc(100vh - 4.5rem);
+    background-image: linear-gradient(to bottom, #333, #222, #aaa);
+    padding: 28px 0px 0px 28px;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.left-menu::after {
+    content: "";
+    display: block;
+    /* position: absolute; */
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    opacity: 0.3;
+    background-image: url(../image/bg.png);
+    z-index: -1;
+}
+
+.left-menu h1 {
+    font-size: 1.1rem;
+}
+
+.left-menu ul {
+    margin-top: 28px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.left-menu ul li {
+    line-height: 40px;
+    color: #ccc;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    cursor: pointer;
+}
+
+.left-menu ul li:hover {
+    color: #fff;
+}
+
+.student-item.active {
+    background-color: rgba(255, 255, 255, .3);
+    color: #fff;
+}
+
+
+/* 设置内容区效果 */
+
+.content {
+    width: 100vw;
+    height: 100vh;
+    padding: 4.5rem 0px 0px 200px;
+    box-sizing: border-box;
+}
+
+.content .content-show:not(.content-active) {
+    display: none;
+}
+
+.content-show {
+    height: 100%;
+}
+
+.content-show .w {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}

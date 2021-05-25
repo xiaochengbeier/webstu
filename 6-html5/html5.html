@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        .control-wrap {
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            background-color: rgba(209, 22, 169, 0.5);
+            z-index: 10;
+            bottom: 0px;
+        }
+        
+        .video-wrap {
+            height: 400px;
+            width: 500px;
+            position: relative;
+        }
+        
+        .video-wrap video {
+            height: 100%;
+            width: 100%;
+            object-fit: fill;
+        }
+        
+        .control-wrap div {
+            position: absolute;
+        }
+        
+        .play-stop,
+        .show-time,
+        .paly-rate,
+        .volume,
+        .full-screen {
+            border: 1px solid white;
+            height: 30px;
+            width: 69px;
+            top: 0px;
+            bottom: 0px;
+            margin: auto;
+            border-radius: 20px;
+            line-height: 30px;
+            text-align: center;
+            color: #fff;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+        
+        .volume {
+            left: 220px;
+        }
+        
+        .play-bar-wrap {
+            width: 100%;
+            height: 10px;
+            background-color: aqua;
+            top: -10px;
+            cursor: pointer;
+        }
+        
+        .progress,
+        .pot {
+            position: absolute;
+            left: 0px;
+            width: 20px;
+            background-color: rgb(2, 1, 1);
+            height: 5px;
+            top: 0px;
+            bottom: 0px;
+            margin: auto;
+        }
+        
+        .pot {
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 8px;
+            left: 20px;
+        }
+        
+        .show-time {
+            left: 100px;
+            width: 104px;
+        }
+        
+        .paly-rate {
+            right: 120px;
+        }
+        
+        .paly-rate ul {
+            position: absolute;
+            display: none;
+            width: 80%;
+            left: 50%;
+            z-index: 20;
+            background-color: rgba(16, 170, 231, 0.4);
+            transform: translateY(-135%) translateX(-50%);
+        }
+        
+        .paly-rate ul li {
+            list-style: none;
+        }
+        
+        .paly-rate ul li:hover {
+            background-color: blue;
+        }
+        
+        .full-screen {
+            right: 30px;
+        }
+        
+        .noise-wrap {
+            opacity: 0;
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            top: -100px;
+            margin: auto;
+            width: 80%;
+            height: 100px;
+            z-index: 10;
+            background-image: repeating-linear-gradient(to bottom, red, yellow, blue, rgba(132, 9, 136, 0.61), rgb(33, 109, 160), rgb(28, 214, 38));
+            box-shadow: 0px 0px 10px 3px black, 0px 0px 10px 5px rgb(61, 68, 70), 0px 0px 10px 5px rgb(224, 220, 220), inset 0px 0px 5px rgb(27, 83, 99), inset 0px 0px 5px rgb(223, 224, 220);
+        }
+        
+        .noise-press,
+        .noise-press div,
+        .noise-press i {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            margin: auto;
+            width: 15px;
+            height: 100%;
+        }
+        
+        .noise-press {
+            background-color: rgba(22, 3, 3, 0.7);
+            box-shadow: 0px 0px 10px 3px black, 0px 0px 10px 5px rgb(61, 68, 70), 0px 0px 10px 5px rgb(224, 220, 220);
+        }
+        
+        .noise-press div {
+            position: absolute;
+            bottom: 0px;
+            width: 4px;
+            background-color: red;
+        }
+        
+        .noise-press i {
+            position: absolute;
+            height: 10px;
+            width: 15px;
+            bottom: 10px;
+            z-index: 20;
+            border-radius: 10px;
+            background-color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <video class="video" src="./demo.mp4"></video>
+</body>
+<script>
+    HTMLVideoElement.prototype.myPlayStyle = function() {
+            this.ondurationchange = function() {
+                var wrap = document.createElement("div");
+                wrap.className = "video-wrap"
+                document.body.appendChild(wrap);
+                wrap.appendChild(this);
+                var controls = new VideoControls(wrap)
+                controls.init();
+            }
+        }
+        //创建一个视频播放控件对象
+    function VideoControls(self) {
+        this.self = self;
+        this.duration = self.duration;
+        this.currentTime = self.currentTime;
+    }
+    //获得元素
+    VideoControls.prototype.getElement = function() {
+            this.playStop = document.getElementsByClassName("play-stop")[0];
+        }
+        //对象初始化方法
+    VideoControls.prototype.init = function() {
+        this.createDom();
+        this.initStyle();
+        this.getElement();
+        this.bindEvent();
+        this.showTime();
+        this.noise();
+    }
+    VideoControls.prototype.initStyle = function() {
+        this.self.style.position = "relative";
+
+    }
+    VideoControls.prototype.bindEvent = function() {
+            var video = document.getElementsByTagName("video")[0];
+            this.playStop.onclick = function() {
+
+                if (video.paused) {
+                    video.play();
+                    this.innerText = "停止";
+                } else {
+                    video.pause();
+                    this.innerText = "播放";
+                }
+
+            }
+
+            var rate = document.getElementsByClassName("paly-rate")[0];
+            var rateSpan = rate.getElementsByTagName("span")[0];
+            var ul = document.getElementsByTagName("ul")[0];
+            var lis = ul.getElementsByTagName("li");
+            var isShow = true;
+            rate.onclick = function() {
+                ul.style.display = isShow == true ? "block" : "";
+                isShow = !isShow;
+            }
+            for (var i = 0; i < lis.length; i++) {
+                lis[i].onclick = function() {
+                    var rat = this.innerText;
+                    rateSpan.innerText = rat;
+                    var raInt = parseInt(rat.slice(1));
+                    video.playbackRate = raInt;
+                }
+            }
+
+
+            //点击进度条
+            var pressWrap = document.getElementsByClassName("play-bar-wrap")[0];
+            var w = pressWrap.offsetWidth;
+            pressWrap.onclick = function(e) {
+                var layerX = e.layerX;
+                var ra = layerX / w;
+                video.currentTime = video.duration * ra;
+            }
+
+            //点击全屏
+            var full = document.getElementsByClassName("full-screen")[0];
+            var fs = document.getElementsByClassName("video-wrap")[0];
+            full.onclick = function() {
+                document.documentElement.requestFullscreen();
+                fs.style.width = window.screen.width + "px";
+                fs.style.height = window.screen.height + "px";
+            }
+
+        }
+        //音量动画
+    VideoControls.prototype.noise = function() {
+            var video = document.getElementsByTagName("video")[0];
+            var wn = document.getElementsByClassName("noise-press")[0];
+            var vo = document.getElementsByClassName("volume")[0];
+            var ni = document.getElementsByClassName("noise-wrap")[0];
+            var wpr = wn.getElementsByTagName("div")[0];
+            var i = wn.getElementsByTagName("i")[0];
+            var width = wn.offsetHeight;
+            wn.onclick = function(e) {
+                var ch = 100 - e.layerY;
+                var b = ch / width;
+                console.log(b, "i am b", ch, width);
+                video.volume = b;
+                i.style.bottom = ch + "px";
+            }
+            var isShow = true;
+            vo.onclick = function() {
+                ni.style.opacity = isShow == true ? "1" : "0";
+                isShow = !isShow;
+                console.log(isShow);
+            }
+            window.setInterval(function() {
+                var rand = Math.random() * width;
+                wpr.style.height = rand + "px";
+            }, 500);
+
+
+        }
+        // 展示时间
+    VideoControls.prototype.showTime = function() {
+            var video = document.getElementsByTagName("video")[0];
+            var self = this;
+            window.setInterval(function() {
+                this.duration = video.duration;
+                this.currentTime = video.currentTime;
+                var st = parseInt(this.duration / 60);
+                var ss = parseInt(this.duration % 60);
+                var ct = parseInt(this.currentTime / 60);
+                var cs = parseInt(this.currentTime % 60);
+                var showTime = document.getElementsByClassName("show-time")[0];
+                showTime.innerText = ct + " : " + cs + "/" + st + " : " + ss;
+
+                //计算当前时间所占总事件的比列
+                self.progress(this.currentTime / this.duration);
+            }, 1000);
+
+
+        }
+        //进度条
+    VideoControls.prototype.progress = function(reate) {
+            var pressWrap = document.getElementsByClassName("play-bar-wrap")[0].offsetWidth;
+            var press = document.getElementsByClassName("progress")[0];
+            var pot = document.getElementsByClassName("pot")[0];
+            var noPosi = reate * pressWrap;
+            press.style.width = noPosi + "px";
+            pot.style.left = noPosi + "px";
+
+
+
+        }
+        //创建控制组件dom标签方法
+    VideoControls.prototype.createDom = function() {
+        //创建包裹层
+        var wrap = document.createElement("div");
+        wrap.className = "control-wrap";
+        //创建播放停止按钮
+        var playStop = document.createElement("div");
+        playStop.className = "play-stop";
+        playStop.innerText = "播放";
+        wrap.appendChild(playStop);
+        //创建时间展示
+        var showTime = document.createElement("div");
+        showTime.className = "show-time";
+        wrap.appendChild(showTime);
+        //创建音量
+        var volume = document.createElement("div");
+        volume.className = "volume"
+        var noise = document.createElement("span");
+        noise.innerText = "音量";
+        var larg = document.createElement("div");
+        larg.className = "noise-wrap"
+        var nw = document.createElement("div");
+        nw.className = "noise-press"
+        var i = document.createElement("i");
+        var nnw = document.createElement("div");
+        nw.appendChild(nnw);
+
+        larg.appendChild(nw);
+        nw.appendChild(i);
+        volume.appendChild(noise);
+        volume.appendChild(larg);
+        wrap.appendChild(volume);
+        //创建倍速播放
+        var playRate = document.createElement("div");
+        playRate.className = 'paly-rate';
+        var span = document.createElement("span");
+        span.innerText = "倍速";
+        playRate.appendChild(span);
+        //创建播放速率选项卡
+        var rateList = document.createElement("ul");
+        for (var i = 0; i < 3; i++) {
+            var li = document.createElement("li");
+            switch (i) {
+                case 0:
+                    li.innerText = "x 1.0";
+                    break;
+                case 1:
+                    li.innerText = "x 1.25";
+                    break;
+                case 2:
+                    li.innerText = "x 2.0"
+                    break;
+            }
+            rateList.appendChild(li);
+        }
+        playRate.appendChild(rateList);
+        wrap.appendChild(playRate);
+
+        //创建全屏播放
+        var fullScreen = document.createElement("div");
+        fullScreen.className = "full-screen";
+        fullScreen.innerText = "全屏";
+        wrap.appendChild(fullScreen);
+        //创建播放条
+        var playBarWrap = document.createElement("div");
+        playBarWrap.className = "play-bar-wrap";
+        //创建播放条中间进度条
+        var progress = document.createElement("div");
+        progress.className = "progress";
+        //创建进度条小点
+        var pot = document.createElement("div");
+        pot.className = "pot";
+
+        playBarWrap.appendChild(progress);
+        playBarWrap.appendChild(pot);
+        wrap.appendChild(playBarWrap);
+        this.self.appendChild(wrap);
+    }
+    var v = document.getElementsByTagName("video")[0];
+    v.myPlayStyle();
+</script>
+
+</html>

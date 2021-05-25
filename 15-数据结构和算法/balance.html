@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Node {
+            constructor(value) {
+                this.value = value;
+                this.left = null;
+                this.right = null;
+            }
+        }
+        let a6 = new Node(6);
+        let a4 = new Node(4);
+        let a8 = new Node(8);
+        let a1 = new Node(1);
+        let a5 = new Node(5);
+        let a9 = new Node(9);
+        let a2 = new Node(2);
+
+        a6.left = a4;
+        a6.right = a8;
+        a4.left = a1;
+        a4.right = a5;
+        a1.right = a2;
+        a8.right = a9;
+
+        function getDeep(root) {
+            //*********首先方法求深度，递归出口空零住。*********
+            if (root == null) {
+                return 0;
+            }
+            //********* 左右递归得深度，返回较大加一住。*********
+            let leftDeep = getDeep(root.left);
+            let rightDeep = getDeep(root.right);
+            let max = Math.max(leftDeep, rightDeep);
+            return max + 1;
+        }
+        console.log(getDeep(a6), "----deep---");
+
+        function isBalance(tree) {
+            if (tree == null) {
+                return true;
+            }
+            // 获得左子树深度
+            let leftDeep = getDeep(tree.left);
+            // 获得右子树深度
+            let rightDeep = getDeep(tree.right);
+            // 判断是否符合平衡二叉树的 标准
+            //********* 然后左右树深度，差值必须一内住。********* 
+            if (Math.abs(leftDeep - rightDeep) > 1) {
+                return false;
+            } else {
+                //*********当前符合定深度，最右子节递归住。*********
+                //判断左子树是不是二叉平衡树
+                let leftIs = isBalance(tree.left);
+                // 判断右子树是不是二叉平衡树
+                let rightIs = isBalance(tree.right);
+                //*********返回条件有二度，且字连接综合住。*********
+                return leftIs && rightIs;
+            }
+        }
+        let isBalanceResult = isBalance(a6);
+        console.log(isBalanceResult, "---isBalanceResult----");
+    </script>
+</body>
+
+</html>

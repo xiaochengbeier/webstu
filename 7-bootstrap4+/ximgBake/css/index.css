@@ -1,0 +1,171 @@
+html {
+    font-size: 62.5% !important;
+    /* 取默认字体的百分比 */
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 62.5%;
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 59%;
+    }
+}
+
+@media (min-width: 576px) {
+    html {
+        font-size: 56%
+    }
+}
+
+
+/* 当屏幕小于992 左侧和右侧占全屏展示取消左侧定位 */
+
+@media (max-width:991.9px) {
+    .leftConten {
+        position: relative!important;
+    }
+    .leftConten .login {
+        height: auto !important;
+    }
+}
+
+.leftConten {
+    left: 0px !important;
+}
+
+.leftConten .header {
+    height: 80px;
+}
+
+.leftConten ul li a {
+    font-size: 1.6rem;
+}
+
+.leftConten .icon-caidan {
+    font-size: 3rem;
+    cursor: pointer;
+    color: #858585;
+}
+
+.leftConten .login {
+    height: calc(100vh - 80px);
+    width: 100%;
+}
+
+.leftConten .login .icon-kafei {
+    font-size: 24px;
+    color: #67a4c7;
+}
+
+.leftConten .login a {
+    font-size: 1.6rem;
+}
+
+.leftConten .login .btn,
+.start .btn {
+    border-radius: 15px !important;
+}
+
+.leftConten .spring {
+    height: 100vh;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 9999;
+    transition: all 0.5s;
+}
+
+.leftConten .spring .list ul a {
+    font-size: 1.8rem;
+}
+
+.leftConten .spring footer a {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.leftConten .spring.hide {
+    opacity: 0;
+    z-index: -3;
+    transform: scale(2) !important;
+}
+
+.leftConten .spring.show {
+    opacity: 1;
+    z-index: 9999;
+    transform: scale(1)!important;
+}
+
+.start h2,
+.betters h3,
+.teah h3 {
+    font-size: 2.2rem;
+}
+
+.start p,
+.betters p {
+    font-size: 1.6rem;
+}
+
+.betters li {
+    margin-top: 56px;
+}
+
+.betters li a img {
+    width: 40%;
+    margin-top: -28px;
+}
+
+.betters li a p,
+.teah p {
+    font-size: 1.4rem;
+}
+
+.betters li a h4 {
+    font-size: 1.6rem;
+}
+
+.betters li a p.caption {
+    font-size: 1.2rem;
+    color: #C2A661;
+    opacity: 0.7;
+}
+
+.betters li a {
+    transition: 0.2s;
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+.betters li a:hover {
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.22);
+    transform: translateY(-5px);
+}
+
+.teah li {
+    width: 288px;
+}
+
+.scroll li {
+    transition: 0.2s;
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+.scroll li:hover {
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.22);
+    transform: translateY(-5px);
+}
+
+.teah ul {
+    width: 1216px;
+}
+
+.footer a span.iconfont {
+    font-size: 2.5rem;
+}
+
+.footer a.active {
+    color: #00A862!important;
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var max = 1000000;
+        var pointSet = [];
+        var distance = [
+            [0, 4, 7, max, max],
+            [4, 0, 8, 6, max],
+            [7, 8, 0, 5, max],
+            [max, 6, 5, 0, 7],
+            [max, max, max, 7, 0]
+        ];
+
+        function Node(value) {
+            this.value = value;
+            this.neighbor = [];
+        }
+
+        var a = new Node("A");
+        var b = new Node("B");
+        var c = new Node("C");
+        var d = new Node("D");
+        var e = new Node("E");
+
+        pointSet.push(a);
+        pointSet.push(b);
+        pointSet.push(c);
+        pointSet.push(d);
+        pointSet.push(e);
+
+        function isLink(nowPoints, tempStart, tempEnd) {
+            let startCity = null;
+            let endCity = null;
+            //根据对应的节点找到对应的部落
+            for (let i = 0; i < nowPoints.length; i++) {
+                if (nowPoints[i].indexOf(tempStart) != -1) {
+                    startCity = nowPoints[i];
+                }
+                if (nowPoints[i].indexOf(tempEnd) != -1) {
+                    endCity = nowPoints[i];
+                }
+            }
+            //如果都为空表示没有部落那么创建一个部落加入 nowPoints
+            //如果startCity == null endCity !=null 表示将 endCity加入到 startcity部落中
+            // 如果 endCity == null  startCity != null 那么 表示将 tempStart 加入到 startCity部落中
+            // 如果 startCity == endCity  表示两个点在同一个部落中不能连接
+            if (startCity != null && endCity != null && startCity == endCity) {
+                return false;
+            }
+            return true;
+        }
+
+        function link(nowPoints, start, end) {
+            let startCity = null;
+            let endCity = null;
+            //根据对应的节点找到对应的部落
+            for (let i = 0; i < nowPoints.length; i++) {
+                if (nowPoints[i].indexOf(start) != -1) {
+                    startCity = nowPoints[i];
+                }
+                if (nowPoints[i].indexOf(end) != -1) {
+                    endCity = nowPoints[i];
+                }
+            }
+            //如果都为空表示没有部落那么创建一个部落加入 nowPoints
+            if (startCity == null && endCity == null) {
+                nowPoints.push([start, end]);
+            }
+            //如果startCity == null endCity !=null 表示将 start 加入到 endCity  部落中
+            if (startCity == null && endCity != null) {
+                endCity.push(start);
+            }
+
+            //如果是在两个不同的部落中那么部落合并
+            if (startCity != null && endCity != null && startCity != endCity) {
+                startCity.push(...endCity);
+                let re = nowPoints.splice(nowPoints.indexOf(endCity), 1);
+            }
+            // 如果 startCity == endCity  表示两个点在同一个部落中不能连接
+
+            start.neighbor.push(end);
+            end.neighbor.push(start);
+
+        };
+
+        function kruskal(pointSet, distance) {
+            let nowPoints = [];
+            while (true) {
+                let start = null;
+                let end = null;
+                let mindis = max;
+                for (let i = 0; i < pointSet.length; i++) {
+                    for (let j = 0; j < distance[i].length; j++) {
+                        let tempStart = pointSet[i];
+                        let tempEnd = pointSet[j];
+                        if (
+                            i != j &&
+                            distance[i][j] < mindis &&
+                            isLink(nowPoints, tempStart, tempEnd)
+                        ) {
+                            start = tempStart;
+                            end = tempEnd;
+                            mindis = distance[i][j];
+                        }
+                    }
+                }
+                //拼接 start end 
+                link(nowPoints, start, end);
+                if (nowPoints.length == 1 && nowPoints[0].length == pointSet.length) {
+                    console.log(nowPoints);
+                    break;
+                }
+            }
+
+
+
+        }
+        kruskal(pointSet, distance);
+    </script>
+</body>
+
+</html>

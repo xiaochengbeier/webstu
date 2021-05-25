@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var max = 1000000;
+        var pointSet = [];
+        var distance = [
+            [0, 4, 7, max, max],
+            [4, 0, 8, 6, max],
+            [7, 8, 0, 5, max],
+            [max, 6, 5, 0, 7],
+            [max, max, max, 7, 0]
+        ];
+
+        function Node(value) {
+            this.value = value;
+            this.neighbor = [];
+        }
+
+        var a = new Node("A");
+        var b = new Node("B");
+        var c = new Node("C");
+        var d = new Node("D");
+        var e = new Node("E");
+
+        pointSet.push(a);
+        pointSet.push(b);
+        pointSet.push(c);
+        pointSet.push(d);
+        pointSet.push(e);
+
+        function isLink(result, tempStart, tempEnd) {
+            //**** 归属部落变量止，遍历已存村庄始。********
+            let startTribe = null;
+            let endTribe = null;
+            for (let i = 0; i < result.length; i++) {
+                if (result[i].indexOf(tempStart) != -1) {
+                    startTribe = result[i];
+                }
+                if (result[i].indexOf(tempEnd) != -1) {
+                    endTribe = result[i];
+                }
+            }
+            // ******** 错误信息返回止，二者部落同原始。 ********
+            if (startTribe != null && endTribe != null && startTribe == endTribe) {
+                return false;
+            }
+            return true;
+        }
+        //**** 节点邻居连接止，判断条件如上始。********
+        function link(result, start, end) {
+            //**** 归属部落变量止，遍历已存村庄始。********
+            let startTribe = null;
+            let endTribe = null;
+            for (let i = 0; i < result.length; i++) {
+                if (result[i].indexOf(start) != -1) {
+                    startTribe = result[i];
+                }
+                if (result[i].indexOf(end) != -1) {
+                    endTribe = result[i];
+                }
+            }
+            // ********如若部落空不止，节点条件连接始。********
+            if (startTribe == null && endTribe == null) {
+                result.push([start, end]);
+            }
+            // ******** 如若部落一空止，吞并单个节点始。 ********
+            if (startTribe != null && endTribe == null) {
+                startTribe.push(end);
+            }
+            if (endTribe != null && startTribe == null) {
+                endTribe.push(start);
+            }
+            // ******** 如若部落空不止，内存地址等开始。 ********
+
+            if (endTribe != null && startTribe != null && endTribe != startTribe) {
+                startTribe.push(...endTribe);
+                result.splice(result.indexOf(endTribe), 1);
+            }
+
+            start.neighbor.push(end);
+            end.neighbor.push(start);
+        };
+
+        function kruskal(pointSet, distance) {
+            let result = [];
+            // *****外层循环不停止，直到部落长一始。*****
+            while (true) {
+                //  *****定义变量存起止，还有最下边距始。 *****
+                let start = null;
+                let end = null;
+                let mindis = max;
+
+                for (let i = 0; i < pointSet.length; i++) {
+                    for (let j = 0; j < distance[i].length; j++) {
+                        // *******临时节点做起止，遍历边集循环始。*********
+                        let tempStart = pointSet[i];
+                        let tempEnd = pointSet[j];
+                        if (
+                            //  *******判断条件不停止，两层变量不同始。 *******
+                            i != j &&
+                            // *******边距比较看小止，查询部落方法始。*******
+                            distance[i][j] < mindis &&
+                            isLink(result, tempStart, tempEnd)
+                        ) {
+                            start = tempStart;
+                            end = tempEnd;
+                            mindis = distance[i][j];
+                        }
+                    }
+                }
+                link(result, start, end);
+                // *****外层循环不停止，直到部落长一始。*****
+                if (result.length == 1 && result[0].length == pointSet.length) {
+                    console.log(result);
+                    break;
+                }
+            }
+        }
+        kruskal(pointSet, distance);
+    </script>
+</body>
+
+</html>

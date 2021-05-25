@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var arr = [5, 1];
+
+        function rotate(rotateArray) {
+            if (rotateArray.length == 0) {
+                return 0;
+            }
+            let left = 0,
+                right = rotateArray.length - 1;
+
+            while (left < right) {
+                let mid = (left + right) >> 1;
+                if (right - left == 1) {
+                    return rotateArray[right];
+                }
+                if (rotateArray[mid] > rotateArray[left]) {
+                    //说明在左边
+                    left = mid;
+                } else if (rotateArray[mid] < rotateArray[left]) {
+                    //说明在右边
+                    right = mid;
+                } else {
+                    left = mid;
+                }
+            }
+        }
+
+        console.log(rotate(arr));
+    </script>
+</body>
+
+</html>

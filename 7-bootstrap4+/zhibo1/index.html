@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>6-8直播练习</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 左侧内容 -->
+            <div class="leftCont d-none d-lg-block">
+                <!-- log部分 -->
+                <div class="log d-flex justify-content-center align-items-center">
+                    <img src="./img/logo.png" alt="">
+                    <small class="text-white ml-3 font-weight-bold">渡一教育</small>
+                </div>
+                <!-- 个人信息部分 -->
+                <div class="text-center py-4 border-bottom info">
+                    <p class="mb-2">小城贝尔</p>
+                    <p class="mb-2">2391651465@qq.com</p>
+                    <p class="mb-2">退出登录</p>
+                </div>
+                <!-- 导航部分 -->
+
+                <div class="nav d-flex flex-column">
+                    <h3 class="h6 font-weight-bold p-3">账号管理</h3>
+                    <a class="nav-item ml-5 rounded-left nav-link active" data-toggle="tab" href="#ziyuan">资源管理</a>
+                    <a class="nav-item ml-5 rounded-left nav-link" data-toggle="tab" href="#quanxian">权限管理</a>
+                    <a class="nav-item ml-5 rounded-left nav-link" data-toggle="tab" href="#yonghu">用户管理</a>
+                    <a class="nav-item ml-5 rounded-left nav-link" data-toggle="tab" href="#mima">修改密码</a>
+                    <h3 class="h6 font-weight-bold p-3"> 地区管理</h3>
+                    <a class="nav-item ml-5 rounded-left nav-link" data-toggle="tab" href="#diqu">地区管理</a>
+                    <a class="nav-item ml-5 rounded-left nav-link" data-toggle="tab" href="#guze">规则管理</a>
+                </div>
+
+
+
+
+
+            </div>
+            <!-- 右侧内容 -->
+            <div class="col px-4 py-5 rightCont">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="ziyuan">
+                        <button class="btn mb-5 btn-outline-warning  " data-toggle="modal" data-target="#addsource">添加资源</button>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%">编码 </th>
+                                    <th style="width: 20%">名称 </th>
+                                    <th>链接 </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1 </td>
+                                    <td>
+                                        <button class="btn  dropdown-toggle" data-target="#dropdowntable" type="button" data-toggle="collapse">
+                                                   系统管理
+                                         </button>
+                                    </td>
+                                    <td>/admin/system/userlist/software/</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success">修改</button>
+                                        <button class="btn btn-sm btn-danger">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="collapse" id="dropdowntable">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 10%">1 </td>
+                                        <td style="width: 20%">系统管理 </td>
+                                        <td>/admin/system/userlist/software/</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success">修改</button>
+                                            <button class="btn btn-sm btn-danger">删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10%">2 </td>
+                                        <td style="width: 20%">系统管理 </td>
+                                        <td>/admin/system/userlist/software/</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success">修改</button>
+                                            <button class="btn btn-sm btn-danger">删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10%">3 </td>
+                                        <td style="width: 20%">系统管理 </td>
+                                        <td>/admin/system/userlist/software/</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success">修改</button>
+                                            <button class="btn btn-sm btn-danger">删除</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- 折叠效果 -->
+                    </div>
+                    <div class="tab-pane fade" id="quanxian">权限管理</div>
+                    <div class="tab-pane fade" id="yonghu">用户管理</div>
+                    <div class="tab-pane fade" id="mima">
+                        <form class="w-50 mx-auto">
+                            <div class="form-group row">
+                                <label for="inputPassword1" class="col-sm-2 col-form-label">原密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword1">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword2" class="col-sm-2 col-form-label">新密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword2">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">确认密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword3">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-secondary">取消</button>
+                                <button class="btn btn-secondary">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="diqu">地区管理</div>
+                    <div class="tab-pane fade" id="guze">规则管理</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addsource">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        这是一个剧中的模态框
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+
+</html>
